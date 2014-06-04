@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+    <title>Slate Embedded Player SDK</title>
+    <meta name="description" content="Slate Embedded Player SDK demo.">
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--[if lt IE 9]>
+        <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/es5-shim/2.0.8/es5-shim.min.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" data-package="lib">
+
+    <style type="text/css">
+        iframe {max-width: 100%;}
+    </style>
+
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="slate.player.js"></script>
+
+    <script type="text/javascript">
+        $(function() {
+            $('iframe').on('initialized error finish ready mute pause resume stop', function(ev) {
+                console.log('event', '#' + $(this).attr('id'), ev.type, Array.prototype.slice.call(arguments, 1));
+            });
+
+            $('#player2').on('initialized', function() {
+                var $p = $(this);
+                setTimeout(function() {
+                    $p.slatePlayer('play');
+                }, 2000);
+            });
+        });
+    </script>
+
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h2>#player</h2>
+                <!--iframe id="player" width="720" height="405" src="//slate.development.slateapp.com/embed/2?width=720&height=405" frameborder="0" webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen="true" scrolling="no"></iframe-->
+                <iframe id="player" width="720" height="405" src="http://slateapp.dev/embed/54" frameborder="0" webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen="true" scrolling="no"></iframe>
+            </div>
+
+            <div class="col-md-6">
+                <h2>#player2</h2>
+                <!--iframe id="player2" width="720" height="405" src="//slate.development.slateapp.com/embed/1?width=720&height=405" frameborder="0" webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen="true" scrolling="no"></iframe-->
+                <iframe id="player2" width="720" height="405" src="http://slateapp.dev/embed/51" frameborder="0" webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen="true" scrolling="no"></iframe>
+            </div>
+
+            <div class="col-md-6">
+                <h2>#player3</h2>
+                <!--iframe id="player3" width="720" height="405" src="//slate.development.slateapp.com/embed/3?width=720&height=405" frameborder="0" webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen="true" scrolling="no"></iframe-->
+                <iframe id="player3" width="720" height="405" src="http://slateapp.dev/embed/53" frameborder="0" webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen="true" scrolling="no"></iframe>
+            </div>
+
+            <div class="col-md-6">
+                <h2>#player4</h2>
+                <!--iframe id="player4" width="720" height="405" src="//slate.development.slateapp.com/embed/4?width=720&height=405" frameborder="0" webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen="true" scrolling="no"></iframe-->
+                <iframe id="player4" width="720" height="405" src="http://slateapp.dev/embed/49" frameborder="0" webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen="true" scrolling="no"></iframe>
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>

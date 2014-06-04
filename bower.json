@@ -1,0 +1,23 @@
+{
+  "name": "slate-player",
+  "version": "0.1.0",
+  "homepage": "https://github.com/slate-app/player",
+  "authors": [
+    "Michał Dudek <michal@neverbland.com>"
+  ],
+  "description": "Slate Embedded Player SDK",
+  "main": "slate.player.min.js",
+  "keywords": [
+    "slate",
+    "player",
+    "embed"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
