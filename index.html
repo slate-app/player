@@ -12,10 +12,11 @@
         <script src="http://cdnjs.cloudflare.com/ajax/libs/es5-shim/2.0.8/es5-shim.min.js"></script>
     <![endif]-->
 
-    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" data-package="lib">
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 
     <style type="text/css">
-        iframe {max-width: 100%;}
+        iframe {max-width: 100%; width: 100%;}
     </style>
 
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
@@ -23,8 +24,10 @@
 
     <script type="text/javascript">
         $(function() {
-            $('iframe').on('initialized error finish ready mute pause resume stop', function(ev) {
-                console.log('event', '#' + $(this).attr('id'), ev.type, Array.prototype.slice.call(arguments, 1));
+            $('.example .example-code').each(function() {
+                var $el = $(this),
+                    code = $el.text();
+                $el.closest('.example').find('pre').text(code);
             });
 
             $('#player2').on('initialized', function() {
@@ -41,27 +44,119 @@
 <body>
 
     <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <h2>#player</h2>
-                <iframe id="player" width="720" height="405" src="//slate.development.slateapp.com/embed/2?width=720&height=405" frameborder="0" webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen="true" scrolling="no"></iframe>
-            </div>
+        <section class="jumbotron">
+            <h1>Slate Embedded Player SDK Demo</h1>
+            <p>This demo shows some examples of how the embedded player works and can be controlled by JavaScript API.</p>
+            <p>
+                <a href="https://github.com/slate-app/player" class="btn btn-primary btn-lg" role="button">GitHub Repo</a>
+            </p>
+        </section>
 
+        <section id="events" class="example">
+            <div class="row">
+                <h2>Listening for DOM events</h2>
+                <div class="col-md-6">
+                    <iframe class="slate-player" width="720" height="405" src="//slate.development.slateapp.com/embed/2" frameborder="0" webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen="true" scrolling="no"></iframe>
+                </div>
+                <div class="col-md-6">
+                    <p>Events:</p>
+                    <textarea class="form-control example-log" style="height: 270px;"></textarea>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>Code:</h3>
+                    <script type="text/javascript" class="example-code">$(function() {
+    var $log = $('#events .example-log');
+    $('#events .slate-player').on([
+        'initialized', 'load', 'error', 'finish', 'mute', 'pause', 'resume', 'stop',
+        'beforeseek', 'fullscreen', 'fullscreen-exit', 'progress', 'seek',
+        'speed', 'volume'
+    ].join(' '), function(ev, currentClip, third) {
+        $log.text(
+            $log.text() + 'event ' + ev.type
+            + (currentClip !== undefined ? ' with clip #' + currentClip.id + ' "' + currentClip.title + '"' : '')
+            + (third !== undefined ? ' and 3rd argument: ' + third : '')
+            + "\n"
+        );
+        $log.scrollTop(999999999);
+    });
+});</script>
+                    <pre class="pre-scrollable"></pre>
+                </div>
+            </div>
+        </section>
+
+        <hr>
+
+        <section id="control" class="example">
+            <div class="row">
+                <h2>Control with JavaScript</h2>
+                <div class="col-md-6">
+                    <iframe class="slate-player" width="720" height="405" src="//slate.development.slateapp.com/embed/1" frameborder="0" webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen="true" scrolling="no"></iframe>
+                </div>
+                <div class="col-md-6">
+                    <p>Control:</p>
+                    <p>
+                        <button type="button" class="btn btn-success" data-action="play"><i class="fa fa-play"></i> Play</button>
+                        <button type="button" class="btn btn-danger" data-action="stop"><i class="fa fa-stop"></i> Stop</button>
+                        <button type="button" class="btn btn-warning" data-action="pause"><i class="fa fa-pause"></i> Pause</button>
+                        <button type="button" class="btn btn-success" data-action="resume"><i class="fa fa-resume"></i> Resume</button>
+                        <button type="button" class="btn btn-default" data-action="toggle"><i class="fa fa-pause"></i>/<i class="fa fa-resume"></i> Toggle pause/resume</button>
+                    </p>
+                    <p>
+                        <button type="button" class="btn btn-info" data-action="seek" data-argument="2">Seek to 2s</button>
+                        <button type="button" class="btn btn-info" data-action="seekTo" data-argument="5">Seek to 50%</button>
+                    </p>
+                    <p>
+                        <button type="button" class="btn btn-warning" data-action="speed" data-argument="0.5"><i class="fa fa-forward"></i> 0.5x speed</button>
+                        <button type="button" class="btn btn-success" data-action="speed" data-argument="1"><i class="fa fa-play"></i> 1x speed</button>
+                        <button type="button" class="btn btn-danger" data-action="speed" data-argument="2"><i class="fa fa-fast-forward"></i> 2x speed</button>
+                    </p>
+                    <p>
+                        <button type="button" class="btn btn-danger" data-action="mute"><i class="fa fa-volume-off"></i> Mute / Unmute</button>
+                        <button type="button" class="btn btn-default" data-action="volume" data-argument="0.1"><i class="fa fa-volume-down"></i> 10% volume</button>
+                        <button type="button" class="btn btn-default" data-action="volume" data-argument="0.5"><i class="fa fa-volume-down"></i>50% volume</button>
+                        <button type="button" class="btn btn-success" data-action="volume" data-argument="1"><i class="fa fa-volume-up"></i> 100% volume</button>
+                    </p>
+                    <!--- `$player.slatePlayer('load', clip)` - load a clip to the player where `clip` is an object containing clip data from Slate -->
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>Code:</h3>
+                    <script type="text/javascript" class="example-code">$(function() {
+    $('#control button').click(function() {
+        var $button = $(this),
+            action = $button.data('action'),
+            argument = $button.data('argument') || null;
+
+        $('#control .slate-player').slatePlayer(action, argument);
+
+        return false;
+    });
+});</script>
+                    <pre class="pre-scrollable"></pre>
+                </div>
+            </div>
+        </section>
+
+        <!--div class="row">
             <div class="col-md-6">
                 <h2>#player2</h2>
-                <iframe id="player2" width="720" height="405" src="//slate.development.slateapp.com/embed/1?width=720&height=405" frameborder="0" webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen="true" scrolling="no"></iframe>
+                <iframe id="player2" width="720" height="405" src="//slate.development.slateapp.com/embed/1" frameborder="0" webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen="true" scrolling="no"></iframe>
             </div>
 
             <div class="col-md-6">
                 <h2>#player3</h2>
-                <iframe id="player3" width="720" height="405" src="//slate.development.slateapp.com/embed/3?width=720&height=405" frameborder="0" webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen="true" scrolling="no"></iframe>
+                <iframe id="player3" width="720" height="405" src="//slate.development.slateapp.com/embed/3" frameborder="0" webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen="true" scrolling="no"></iframe>
             </div>
 
             <div class="col-md-6">
                 <h2>#player4</h2>
-                <iframe id="player4" width="720" height="405" src="//slate.development.slateapp.com/embed/4?width=720&height=405" frameborder="0" webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen="true" scrolling="no"></iframe>
+                <iframe id="player4" width="720" height="405" src="//slate.development.slateapp.com/embed/4" frameborder="0" webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen="true" scrolling="no"></iframe>
             </div>
-        </div>
+        </div-->
     </div>
     
 </body>

@@ -3,6 +3,8 @@ Slate Embedded Player SDK
 
 Slate Embedded Player SDK allows websites to control the embedded Slate Player with JavaScript and relays the DOM events from inside the iframe to the parent window.
 
+**Check our [demo](http://slate-app.github.io/player/)**
+
 Include the `slate.player.min.js` file in your website and gain control over the embedded player (see **Usage** section for more info).
 
 jQuery 1.6+ is required (but will potentially work with older versions as well).
