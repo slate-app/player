@@ -14,12 +14,14 @@
 
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
     <link href="http://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="assets/prism.css" rel="stylesheet">
 
     <style type="text/css">
         iframe {max-width: 100%; width: 100%;}
     </style>
 
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="assets/prism.js"></script>
     <script type="text/javascript" src="slate.player.js"></script>
 
     <script type="text/javascript">
@@ -27,14 +29,7 @@
             $('.example .example-code').each(function() {
                 var $el = $(this),
                     code = $el.text();
-                $el.closest('.example').find('pre').text(code);
-            });
-
-            $('#player2').on('initialized', function() {
-                var $p = $(this);
-                setTimeout(function() {
-                    $p.slatePlayer('play');
-                }, 2000);
+                $el.closest('.example').find('pre code').text(code);
             });
         });
     </script>
@@ -67,22 +62,35 @@
                 <div class="col-md-12">
                     <h3>Code:</h3>
                     <script type="text/javascript" class="example-code">$(function() {
+    // grab reference to the log element
     var $log = $('#events .example-log');
+
+    // listen for DOM events on the player
     $('#events .slate-player').on([
+
+        // list of all events that we listen for
         'initialized', 'load', 'error', 'finish', 'mute', 'pause', 'resume', 'stop',
         'beforeseek', 'fullscreen', 'fullscreen-exit', 'progress', 'seek',
         'speed', 'volume'
+
     ].join(' '), function(ev, currentClip, third) {
+        // log this event to the log element
         $log.text(
             $log.text() + 'event ' + ev.type
+
+            // add clip information if set
             + (currentClip !== undefined ? ' with clip #' + currentClip.id + ' "' + currentClip.title + '"' : '')
+
+            // add third argument information if set
             + (third !== undefined ? ' and 3rd argument: ' + third : '')
+
             + "\n"
         );
+        // make sure scrolled to bottom
         $log.scrollTop(999999999);
     });
 });</script>
-                    <pre class="pre-scrollable"></pre>
+                    <pre class="pre-scrollable"><code class="language-javascript"></code></pre>
                 </div>
             </div>
         </section>
@@ -126,37 +134,25 @@
                 <div class="col-md-12">
                     <h3>Code:</h3>
                     <script type="text/javascript" class="example-code">$(function() {
+    // listen for clicks on the buttons
     $('#control button').click(function() {
         var $button = $(this),
+            // get the action name from the button's data-action attribute
             action = $button.data('action'),
+
+            // get optional argument for the button's data-argument attribute
             argument = $button.data('argument') || null;
 
+        // call the Slate Player plugin action
         $('#control .slate-player').slatePlayer(action, argument);
 
         return false;
     });
 });</script>
-                    <pre class="pre-scrollable"></pre>
+                    <pre class="pre-scrollable"><code class="language-javascript"></code></pre>
                 </div>
             </div>
         </section>
-
-        <!--div class="row">
-            <div class="col-md-6">
-                <h2>#player2</h2>
-                <iframe id="player2" width="720" height="405" src="//slate.development.slateapp.com/embed/1" frameborder="0" webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen="true" scrolling="no"></iframe>
-            </div>
-
-            <div class="col-md-6">
-                <h2>#player3</h2>
-                <iframe id="player3" width="720" height="405" src="//slate.development.slateapp.com/embed/3" frameborder="0" webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen="true" scrolling="no"></iframe>
-            </div>
-
-            <div class="col-md-6">
-                <h2>#player4</h2>
-                <iframe id="player4" width="720" height="405" src="//slate.development.slateapp.com/embed/4" frameborder="0" webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen="true" scrolling="no"></iframe>
-            </div>
-        </div-->
     </div>
     
 </body>
