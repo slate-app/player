@@ -82,7 +82,7 @@
             + (currentClip !== undefined ? ' with clip #' + currentClip.id + ' "' + currentClip.title + '"' : '')
 
             // add third argument information if set
-            + (third !== undefined ? ' and 3rd argument: ' + third : '')
+            + (third !== undefined ? ' and 3rd argument: ' + JSON.stringify(third) : '')
 
             + "\n"
         );

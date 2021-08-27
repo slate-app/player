@@ -41,7 +41,7 @@ if (typeof jQuery === 'undefined') {
             }
             
             var name = msgEvent.data.name,
-                data = msgEvent.data.data,
+                data = JSON.parse(msgEvent.data.data),
                 token = msgEvent.data.token;
 
             // ignore if it's not this player's token
